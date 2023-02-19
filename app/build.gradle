@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.firestoredummy"
-        minSdk 21
+        minSdk 27
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -37,7 +37,9 @@ android {
 }
 
 dependencies {
-
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'org.apache.poi:poi:5.2.0'
+    implementation 'org.apache.poi:poi-ooxml:5.2.0'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
