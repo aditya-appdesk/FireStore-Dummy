@@ -53,13 +53,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun readExcelFromRaw(context: Context, resourceId: Int): List<List<String>> {
+     fun readExcelFromRaw(context: Context, resourceId: Int): List<List<String>> {
         val inputStream: InputStream = context.resources.openRawResource(resourceId)
         val workbook = HSSFWorkbook(inputStream)
         val sheet = workbook.getSheetAt(0)
         val rows = sheet.iterator()
 
         val result = mutableListOf<List<String>>()
+
         while (rows.hasNext()) {
             val currentRow = rows.next()
             val cells = currentRow.iterator()
@@ -67,11 +68,13 @@ class MainActivity : AppCompatActivity() {
             val rowValues = mutableListOf<String>()
             while (cells.hasNext()) {
                 val cell = cells.next()
-                rowValues.add(cell.toString())
+                if(cell.toString().isNotBlank()){
+                    rowValues.add(cell.toString())
+                }
             }
+
             result.add(rowValues)
         }
-
         return result
     }
 }
