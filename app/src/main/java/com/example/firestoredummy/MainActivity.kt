@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             listOfResults.add(res)
         }
         Log.d("Answer", listOfResults.groupBy { it.bookName }.toString())
-        return listOf()
+        return listOfResults
     }
 
 }
