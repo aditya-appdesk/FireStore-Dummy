@@ -15,7 +15,7 @@ import java.io.InputStream
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,13 +29,18 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     val title = etHeading.text.toString()
                     val description = etDescription.text.toString()
-                    saveDataToFireStore(title,description)
+                    saveDataToFireStore(title, description)
                 }
             }
         }
 
-       val data = readExcelFromRaw(this,R.raw.boooook)
-        Log.i("Data",data.toString())
+        val data = readExcelFromRaw(this, R.raw.boooook)
+        Log.i("Data", data.toString())
+        binding.apply {
+            uploadButton.setOnClickListener {
+                TODO()
+            }
+        }
     }
 
 
@@ -55,38 +60,18 @@ class MainActivity : AppCompatActivity() {
         val inputStream: InputStream = context.resources.openRawResource(resourceId)
         val workbook = HSSFWorkbook(inputStream)
         val sheet = workbook.getSheetAt(0)
-        //   Log.d("taget",sheet.toMutableSet().toString())
-        /*    val rows = sheet.iterator()
-
-            val result = mutableListOf<List<String>>()
-
-            while (rows.hasNext()) {
-                val currentRow = rows.next()
-                val cells = currentRow.iterator()
-
-                val rowValues = mutableListOf<String>()
-                while (cells.hasNext()) {
-                    val cell = cells.next()
-                    if(cell.toString().isNotBlank()){
-                        rowValues.add(cell.toString())
-                    }
-                }
-
-                result.add(rowValues)
-            }
-            return result*/
-
         val listOfResults = mutableListOf<DataForExcel>()
-        sheet.forEachIndexed { index, row ->
+        sheet.forEachIndexed { indexr, row ->
             val data = mutableListOf<String>()
             row.forEach {
-                if(it.toString().isNotBlank())
+                if (it.toString().isNotBlank())
                     data.add(it.toString())
             }
-            val res = DataForExcel(data.get(0),data.get(1),data.get(2),data.get(3),data.get(4))
+            val res = DataForExcel(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4))
             listOfResults.add(res)
         }
-        Log.d("Answer",listOfResults.groupBy { it.bookName }.toString())
-        return listOfResults
+        Log.d("Answer", listOfResults.groupBy { it.bookName }.toString())
+        return listOf()
     }
+
 }
