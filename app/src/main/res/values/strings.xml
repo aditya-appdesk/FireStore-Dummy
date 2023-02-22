@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FireStore Dummy</string>
+    <string name="titleHint">Title</string>
+    <string name="des">Description</string>
+    <string name="save">Save</string>
+    <string name="upload">"Upload "</string>
 </resources>
