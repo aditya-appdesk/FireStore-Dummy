@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.button.setOnClickListener {
             binding.apply {
                 if (etHeading.text.isEmpty() || etDescription.text.isEmpty()) {
@@ -44,14 +45,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // val data = readExcelFromRaw(this, R.raw.boooook)
-        //   Log.i("Data", data.toString())
         binding.apply {
             uploadButton.setOnClickListener {
                 if (checkStoragePermission(this@MainActivity)) {
                     showFilePicker(this@MainActivity)
                 }
             }
+        }
+        binding.button.setOnClickListener {
+            startActivity(Intent(this@MainActivity, CreateExcelFileActivity::class.java))
         }
     }
 
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             row.forEach {
                 if (it.toString().isNotBlank())
                     data.add(it.toString())
+
             }
             val res = DataForExcel(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4))
             listOfResults.add(res)
@@ -123,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun handleFilePickerResult(
+    private fun handleFilePickerResult(
         requestCode: Int,
         resultCode: Int,
         data: Intent?,
@@ -151,10 +154,10 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
-
         val chooserIntent = Intent.createChooser(intent, "Select File")
         activity.startActivityForResult(chooserIntent, PICKFILE_REQUEST_CODE)
     }
+
 
 }
 
