@@ -21,6 +21,8 @@ class CreateExcelFileActivity : AppCompatActivity() {
         binding.creatExcel.setOnClickListener {
             val filePath = createExcelFile(booksData)
             Log.d("Excel File Path", filePath)
+            toast("Excel Created Succesfully")
+
         }
     }
     private fun dataForExcels(): List<DataForExcel> {
@@ -34,9 +36,15 @@ class CreateExcelFileActivity : AppCompatActivity() {
 
     private fun createExcelFile(BooksList: List<DataForExcel>): String {
         // Create a new Excel workbook and sheet
-        try {
             val workbook = XSSFWorkbook()
             val sheet = workbook.createSheet("Books Information")
+
+            // Set the column width for each column
+            sheet.setColumnWidth(0, 8000)
+            sheet.setColumnWidth(1, 8000)
+            sheet.setColumnWidth(2, 8000)
+            sheet.setColumnWidth(3, 8000)
+            sheet.setColumnWidth(4, 8000)
 
             // Create a header row
             val headerRow = sheet.createRow(0)
@@ -45,6 +53,7 @@ class CreateExcelFileActivity : AppCompatActivity() {
             headerRow.createCell(2).setCellValue("Publisher Name")
             headerRow.createCell(3).setCellValue("Date")
             headerRow.createCell(4).setCellValue("Source")
+
 
             // Add data rows for each employee
             var rowNum = 1
@@ -64,16 +73,8 @@ class CreateExcelFileActivity : AppCompatActivity() {
             val fileOutputStream = FileOutputStream(file)
             workbook.write(fileOutputStream)
             fileOutputStream.close()
-            toast("Excel Created Succesfully")
             // Return the path of the Excel file
             return file.absolutePath
-        }
-        catch (e:Exception){
-            e.printStackTrace()
-            toast(e.message.toString())
-            return "Error"
-        }
-
     }
 
 }
